@@ -1,3 +1,4 @@
+const { json } = require('express');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -22,8 +23,10 @@ app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, './public/note
 app.get('/api/notes', (req, res) => res.json(data));
 
 app.post('/api/notes', (req, res) => {
-    data.push(req.body)
-    });
+notesData = fs.readFileSync(data);
+notesData.push(req.body);
+notesData =JSON.stringify(notesData);
+fs.writeFile(data, notesData)})
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, './public/index.html')));
 
